@@ -1,0 +1,67 @@
+<?php
+	// configuration
+	require("includes/config.php");
+
+	// PHPmailer()
+	require_once("class.phpmailer.php");
+
+	if ($_SERVER["REQUEST_METHOD"] == "GET") {
+		$history = query("SELECT name, so, type, result FROM history WHERE id = ?", $_SESSION["id"]);
+		$name = query("SELECT name FROM users WHERE id = ?", $_SESSION["id"]);
+		render("history.php", ["indexActive" => "", "aboutActive" => "", "offspringActive" => "", "spouseActive" => "", "historyActive" => "active", "name" => $name[0]["name"], "history" => $history, "end" => "<form method='post' action='history.php'>
+<div class='row'>
+	<div class='checkbox col-sm-6 col-sm-offset-4 form-inline'>
+    		<label>
+      			  Would you like to send an email of the results? - 
+    		</label>
+		<input autofocus class='form-control' name='email' id='email' placeholder='Email' type='text'/>
+		<button type='submit' class='btn btn-default' style='display: inline; margin-left: 10px;'>Send!</button>
+  	    </div>
+</div>
+</form>"]);
+	} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		
+				$history = query("SELECT name, so, type, result FROM history WHERE id = ?", $_SESSION["id"]);
+				$name1 = query("SELECT name FROM users WHERE id = ?", $_SESSION["id"]);
+				$msg = "
+<body><h3>Hello! " . $name1[0]["name"] . " would like you to view this Inheritance history.</h3>";
+				$msg .= "<table class='table table-striped margin-top'>
+    		<thead>
+      			<tr style='background-color: #E0E0E0; font-family: Century Gothic; font-size: 20px;'>
+				<th>Name</th>
+        			<th>Spouse/Offspring</th>
+				<th>Type</th>
+        			<th>Result</th>
+      			</tr>
+    		</thead>
+    		<tbody>";
+				foreach ($history as $row) {
+					$msg .= "<tr  style='background-color: #F5F5F5;'>
+        				<td style='text-align: center !important; font-family: Helvetica; font-size: 15px;'>".$row["name"]."</td>
+        				<td style='text-align: center !important; font-family: Helvetica; font-size: 15px;'>" .$row["so"]."</td>
+        				<td style='text-align: center !important; font-family: Helvetica; font-size: 15px;'>".$row["type"]."</td>
+					<td style='text-align: center !important; font-family: Helvetica; font-size: 15px;'>".$row["result"]."</td>
+      					</tr>";
+				}
+				$msg .= "</tbody> </table></body>";
+				$mail = new PHPMailer();
+				$mail->IsSMTP();
+				$mail->SMTPAuth = true;
+				$mail->SMTPSecure = "tls";
+				$mail->Host = "smtp.gmail.com";
+				$mail->Port = 587;
+				$mail->Username = "cs50genes@gmail.com";
+				$mail->Password = "lolnicetry";
+				$mail->SetFrom("cs50genes@gmail.com");
+				$mail->AddAddress($_POST["email"]);
+				$mail->Subject =  "Inheritance History";
+				$mail->IsHTML(true);
+				$mail->Body = $msg;
+				$name = query("SELECT name FROM users WHERE id = ?", $_SESSION["id"]);
+				if ($mail->Send() === false)
+					render("history.php", ["indexActive" => "", "aboutActive" => "", "offspringActive" => "", "spouseActive" => "", "historyActive" => "active", "name" => $name[0]["name"], "history" => $history, "end" => "<h3 class='result text-center'>Sorry, but the email didn't send.</h3>"]); 
+				else
+					render("history.php", ["indexActive" => "", "aboutActive" => "", "offspringActive" => "", "spouseActive" => "", "historyActive" => "active", "name" => $name[0]["name"], "history" => $history, "end" => "<h3 class='result text-center'>Your email was sent!</h3>"]);	
+	
+}	
+?>

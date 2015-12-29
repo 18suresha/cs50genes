@@ -1,0 +1,272 @@
+/**
+ * style.css
+ *
+ * Computer Science 50
+ * Final Project
+ * Adarsh Suresh
+ * 
+ * Global CSS.
+ */
+
+@charset "UTF-8";
+
+::-moz-selection {
+	color: white;
+	background: #898989;
+}
+
+::selection {
+	color: white;
+	background: #898989;
+}
+
+.container
+{
+    /* center contents */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#middle .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+#bottom
+{
+    /* shrink bottom's font size */
+    font-size: smaller;
+
+    /* surround with whitespace */
+    margin: 20px;
+}
+
+.margin-top {
+	margin-top: 20px;
+}
+
+.navbar {
+	margin-bottom: 15px;
+	border-radius: 0px 0px 0px 0px;
+	-moz-border-radius: 0px 0px 0px 0px;
+	-webkit-border-radius: 0px 0px 0px 0px;
+	border: 2px double #cfc9cf;	
+}
+
+.navbar div {
+	margin-top: 10px;
+}
+
+.navbar div a:hover {
+	text-decoration: none;
+}
+
+hr {
+    border-top: 1px solid #b5b5b5;
+}
+
+h1 {
+    font-family: 'Titillium Web', sans-serif; 
+    font-size: 60px;
+}
+
+h1 a:hover {
+    text-decoration: none;   
+}
+
+.nav li a {
+    font-family: text1;   
+    font-size: 19.5px;
+}
+
+@font-face {
+    font-family: text1;
+    src: url(../fonts/ocr_std.ttf);
+}
+
+#mainImg {
+    margin-top: 10px;   
+}
+
+ul.nav {
+    margin-top: 20px;   
+}
+
+.box {
+    border-radius: 0px 0px 0px 0px;
+    -moz-border-radius: 0px 0px 0px 0px;
+    -webkit-border-radius: 0px 0px 0px 0px;
+    border: 3px solid #525252;
+}
+
+.parent-1 {
+    height: 200px;
+    position: relative;
+}
+
+.parent1 {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 80px;
+    font-family: 'Muli', sans-serif;
+}
+
+.parent-1 input:-ms-input-placeholder {
+   font-size: 40px;
+    vertical-align: middle;
+}
+
+/*For Webkit browsers (Chrome, Safari) */
+.parent-1 input::-webkit-input-placeholder {
+    font-size: 40px;
+    vertical-align: middle;
+}
+
+/* For Mozilla Firefox */
+.parent-1 input:-moz-placeholder {
+    font-size: 40px;
+    vertical-align: middle;
+}
+
+.hide {
+    display: none;
+}
+
+.display-block {
+    display: block;   
+}
+
+footer.footer-margin-big {
+    margin-top: 40px;   
+}
+
+footer.footer-margin-less {
+    margin-top: 20px;
+}
+
+.offspringResultBorder {
+    border-radius: 0px 0px 0px 0px;
+    -moz-border-radius: 0px 0px 0px 0px;
+    -webkit-border-radius: 0px 0px 0px 0px;
+    border: 3px solid #525252;
+}
+
+.offspringResultBorder h2 {
+	font-family: 'Dosis', sans-serif;	
+	font-size: 90px;
+	font-weight: 100;
+}
+
+h2 {
+	font-size: 40px;
+}
+
+.result {
+	font-family: 'Inconsolata', sans-serif;
+	font-size: 35px;
+	font-weight: 100;
+}
+
+@-webkit-keyframes hvr-bob {
+    0% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+
+    50% {
+        -webkit-transform: translateY(-4px);
+        transform: translateY(-4px);
+    }
+
+    100% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes hvr-bob {
+    0% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+
+    50% {
+        -webkit-transform: translateY(-4px);
+        transform: translateY(-4px);
+    }
+
+    100% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+    }
+
+@-webkit-keyframes hvr-bob-float {
+    100% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes hvr-bob-float {
+    100% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+}
+    
+
+
+
+.hvr-bob:hover, .hvr-bob:focus, .hvr-bob:active {
+    -webkit-animation-name: hvr-bob-float, hvr-bob;
+    animation-name: hvr-bob-float, hvr-bob;
+    -webkit-animation-duration: .3s, 1.5s;
+    animation-duration: .3s, 1.5s;
+    -webkit-animation-delay: 0s, .3s;
+    animation-delay: 0s, .3s;
+    -webkit-animation-timing-function: ease-out, ease-in-out;
+    animation-timing-function: ease-out, ease-in-out;
+    -webkit-animation-iteration-count: 1, infinite;
+    animation-iteration-count: 1, infinite;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-direction: normal, alternate;
+    animation-direction: normal, alternate;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+}
+
+#adrs-txt, #genes-txt, #cs50-txt {
+    display: none;
+    margin-left: 25%;
+}
+
+#adrs-txt h4, #genes-txt h4, #cs50-txt h4 {
+    line-height: 25px;
+}

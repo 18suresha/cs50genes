@@ -1,0 +1,16 @@
+<?php
+	// configuration
+	require("../includes/config.php");
+
+	if ($_SERVER["REQUEST_METHOD"] == "GET") {
+		render("quote_form.php", ["title" => "Quotes"]);
+	} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$stock = lookup($_POST["symbol"]);
+		if ($stock == false) {
+			apologize("You must enter a valid stock symbol!");
+		} else {
+			render("quoteResult.php", ["title" => "Quotes", "symbol" => $stock["symbol"], "name" => $stock["name"], "price" => $stock["price"]]);
+		}
+	}
+?>
+

@@ -1,0 +1,49 @@
+<?php
+	// configuration
+	require("../includes/config.php");
+
+	// PHPmailer()
+	require_once("libphp-phpmailer/class.phpmailer.php");
+
+	if ($_SERVER["REQUEST_METHOD"] == "GET") {
+		render("sell_form.php", ["title" => "Sell"]);
+	} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$info = query("SELECT shares FROM portfolio WHERE id = ? AND symbol = ?", $_SESSION["id"], $_POST["symbol"]);
+		$stock = lookup($_POST["symbol"]);
+		if ($stock === false) {
+			apologize("You must enter a valid stock symbol!");
+		} else if ($info == false) {
+			apologize("You must enter a stock symbol that you have!");
+		} else {
+			$total = $info[0]["shares"] * $stock["price"];
+			query("DELETE FROM portfolio WHERE id = ? AND symbol = ?", $_SESSION["id"], $_POST["symbol"]);
+			query("UPDATE users SET cash = cash + ? WHERE id = ?", $total, $_SESSION["id"]);
+			$cash = query(" SELECT cash FROM users WHERE id = ?", $_SESSION["id"]);
+			query("INSERT INTO history (id, date, type, symbol, name, shares, sign, cash) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?)", $_SESSION["id"], "Sell", $_POST["symbol"], $stock["name"], $info[0]["shares"], "+", $total);
+			$msg = "Hello! You have sold a stock from " . $stock["name"] . ". " . $info[0]["shares"] ." shares * $" . number_format($stock["price"], 2) . " = " . "+ $" . number_format($total, 2);
+			if ($_POST["email"] != "") {
+				$msg = wordwrap($msg, 100);
+				$mail = new PHPMailer();
+				$mail->IsSMTP();
+				$mail->SMTPAuth = true;
+				$mail->SMTPSecure = "tls";
+				$mail->Host = "smtp.gmail.com";
+				$mail->Port = 587;
+				$mail->Username = "compsci50finance@gmail.com";
+				$mail->Password = "csdoggie";
+				$mail->SetFrom("compsci50finance@gmail.com");
+				$mail->AddAddress($_POST["email"]);
+				$mail->Subject = "Stock Sale";
+				$mail->Body = $msg;
+				if ($mail->Send() === false) {
+					render("sellResult.php", ["title" => "Sell", "name" => $stock["name"], "cash" => $cash[0]["cash"], "mail" => "However, your email didn't send."]);
+				} else {
+					render("sellResult.php", ["title" => "Sell", "name" => $stock["name"], "cash" => $cash[0]["cash"], "mail" => "Your email also was sent!"]);
+				}
+			} else {
+				render("sellResult.php", ["title" => "Sell", "name" => $stock["name"], "cash" => $cash[0]["cash"], "mail" => ""]);
+			}			
+		}	
+	}
+?>
+

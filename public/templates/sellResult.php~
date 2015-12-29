@@ -1,0 +1,5 @@
+<h4>Congratulations on selling your stock from <?=$name?>!</h4>
+<h5>Current Cash: $<?=number_format($cash, 2);?></h5>
+<div>
+    	<a href="logout.php">Log Out</a>
+</div>

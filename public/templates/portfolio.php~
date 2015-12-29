@@ -1,0 +1,43 @@
+	<h3>Hello <strong><?=$username?></strong>!</h3>
+	<h4>Here's your current portfolio.</h4>
+<div>
+	<h5 class="margin-top">Current Cash: $<?=number_format($cash, 2);?><h5>
+	<table class="table table-striped margin-top">
+    		<thead>
+      			<tr>
+        			<th>Symbol</th>
+				<th>Name</th>
+        			<th>Current Price</th>
+				<th>Shares</th>
+        			<th>Total</th>
+      			</tr>
+    		</thead>
+    		<tbody>
+			<?php foreach ($portfolio as $row): ?>
+      				<tr>
+        				<td><?=$row["symbol"]?></td>
+        				<td><?=$row["name"]?></td>
+        				<td><?=number_format($row["price"], 2);?></td>
+					<td><?=$row["shares"]?></td>
+					<td><?=$row["price"] * $row["shares"]?></td>
+      				</tr>
+ 			<?php endforeach ?>
+    		</tbody>
+  	</table>
+</div>
+<div class="input-group" style="margin-bottom: 50px">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <input type="text" class="form-control" aria-label="...">
+    </div><!-- /input-group -->
+<div>
+    	<a href="logout.php">Log Out</a>
+</div>
